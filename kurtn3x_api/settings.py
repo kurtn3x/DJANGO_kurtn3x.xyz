@@ -30,6 +30,7 @@ DEBUG = True
 
 
 # CSRF & CORS STUFF
+CORS_ORIGIN_ALLOW_ALL = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_DOMAIN = '.kurtn3x.xyz'
 CSRF_TRUSTED_ORIGINS = [
@@ -37,13 +38,24 @@ CSRF_TRUSTED_ORIGINS = [
         'https://www.kurtn3x.xyz',
         'https://api.kurtn3x.xyz',
         'kurtn3x.xyz',
+        'test2.kurtn3x.xyz',
+        'test.kurtn3x.xyz',
+        'https://test2.kurtn3x.xyz',
+        'https://test.kurtn3x.xyz',
+        'https://www.test2.kurtn3x.xyz',
 ]
+
 ALLOWED_HOSTS= [
         'kurtn3x.xyz',
-        'https://kurtn3x.xyz', 
-        'api.kurtn3x.xyz', 
+        'https://kurtn3x.xyz',
+        'api.kurtn3x.xyz',
         'https://api.kurtn3x.xyz',
+        'https://test2.kurtn3x.xyz',
+        'https://test.kurtn3x.xyz',
+        'test2.kurtn3x.xyz',
+        'test.kurtn3x.xyz',
 ]
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 # REST STUFF

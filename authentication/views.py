@@ -32,27 +32,30 @@ class SignupView(APIView):
 
         username = data['username']
         password = data['password']
-        re_password  = data['re_password']
+        re_password = data['re_password']
+        email = data['email']
 
         try:
             if password == re_password:
                 if User.objects.filter(username=username).exists():
                     return Response({ 'error': 'Username already exists' })
+                elif User.objects.filter(email=email).exists():
+                    return Response({'error': 'E-Mail already exists'})
                 else:
                     if len(password) < 6:
                         return Response({ 'error': 'Password must be at least 6 characters' })
                     else:
-                        user = User.objects.create_user(username=username, password=password)
+                        user = User.objects.create_user(username=username, password=password, email=email)
 
                         user = User.objects.get(id=user.id)
 
-                        user_profile = UserProfile.objects.create(user=user, first_name='', last_name='', phone='', city='')
+                        user_profile = UserProfile.objects.create(user=user, first_name='', last_name='', phone='')
 
                         return Response({ 'success': 'User created successfully' })
             else:
                 return Response({ 'error': 'Passwords do not match' })
-        except:
-                return Response({ 'error': 'Something went wrong when registering account' })
+        except Exception as e:
+                return Response({ 'error': f'Something went wrong when registering account {e}' })
 
 @method_decorator(csrf_protect, name='dispatch')
 class LoginView(APIView):
