@@ -1,4 +1,4 @@
-"""kurtn3x URL Configuration
+"""kurtn3x_api URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -18,6 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('auth/', include('authentication.urls')),
+    path('profile/', include('user_profile.urls')),
+
 ]
