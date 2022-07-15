@@ -1,4 +1,6 @@
 ## DJANGO Rest api für https://kurtn3x.xyz - erreichbar über https://api.kurtn3x.xyz
+
+### ( bzw. als developement API unter https://test2.kurtn3x.xyz )
 ### Notes zu Apache und Plugins: 
 - apache strippt sämtliche cors header und authorization headers, führt zu menge an problemen \
 `WSGIPassAuthorization On` in apache2.conf -> Authorization header wird nicht entfernt wichtig für Tokens
