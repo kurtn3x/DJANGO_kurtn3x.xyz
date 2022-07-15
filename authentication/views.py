@@ -19,9 +19,9 @@ class CheckAuthenticatedView(APIView):
             if isAuthenticated:
                 return Response({ 'isAuthenticated': 'success' })
             else:
-                return Response({ 'isAuthenticated': 'error' })
+                return Response({ 'isAuthenticated': 'error' }, "202")
         except:
-            return Response({ 'error': 'Something went wrong when checking authentication status' })
+            return Response({ 'error': 'Something went wrong when checking authentication status' }, "202")
 
 @method_decorator(csrf_protect, name='dispatch')
 class SignupView(APIView):
@@ -38,12 +38,12 @@ class SignupView(APIView):
         try:
             if password == re_password:
                 if User.objects.filter(username=username).exists():
-                    return Response({ 'error': 'Username already exists' })
+                    return Response({ 'error': 'Username already exists' }, "202")
                 elif User.objects.filter(email=email).exists():
-                    return Response({'error': 'E-Mail already exists'})
+                    return Response({'error': 'E-Mail already exists'}, "202")
                 else:
                     if len(password) < 6:
-                        return Response({ 'error': 'Password must be at least 6 characters' })
+                        return Response({ 'error': 'Password must be at least 6 characters' }, "202")
                     else:
                         user = User.objects.create_user(username=username, password=password, email=email)
 
@@ -53,9 +53,9 @@ class SignupView(APIView):
 
                         return Response({ 'success': 'User created successfully' })
             else:
-                return Response({ 'error': 'Passwords do not match' })
+                return Response({ 'error': 'Passwords do not match' }, "202")
         except Exception as e:
-                return Response({ 'error': f'Something went wrong when registering account {e}' })
+                return Response({ 'error': f'Something went wrong when registering account {e}' }, "202")
 
 @method_decorator(csrf_protect, name='dispatch')
 class LoginView(APIView):
@@ -74,9 +74,9 @@ class LoginView(APIView):
                 auth.login(request, user)
                 return Response({ 'success': 'User authenticated' })
             else:
-                return Response({ 'error': 'Error Authenticating' })
+                return Response({ 'error': 'Error Authenticating' }, "202")
         except:
-            return Response({ 'error': 'Something went wrong when logging in' })
+            return Response({ 'error': 'Something went wrong when logging in' }, "202")
 
 class LogoutView(APIView):
     def post(self, request, format=None):
@@ -84,7 +84,7 @@ class LogoutView(APIView):
             auth.logout(request)
             return Response({ 'success': 'Loggout Out' })
         except:
-            return Response({ 'error': 'Something went wrong when logging out' })
+            return Response({ 'error': 'Something went wrong when logging out' }, "202")
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class GetCSRFToken(APIView):
