@@ -1,0 +1,9 @@
+sudo -u postgres psql
+
+# CREATE / DELETE
+CREATE DATABASE kurtn3x OWNER postgres;
+DROP DATABASE kurtn3x;
+
+# LOOK INTO DATABASE
+\c kurtn3x
+TABLE mytablename;

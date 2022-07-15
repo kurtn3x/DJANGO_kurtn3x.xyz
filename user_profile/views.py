@@ -14,8 +14,10 @@ class GetUserProfileView(APIView):
             user_profile = UserProfileSerializer(user_profile)
 
             return Response({ 'profile': user_profile.data, 'username': str(username) })
-        except:
-            return Response({ 'error': 'Something went wrong when retrieving profile' })
+        except Exception as e:
+            user = self.request.user
+            username = user.username
+            return Response({ 'error': f"{e}, user: {user} username: {username}" })
 
 class UpdateUserProfileView(APIView):
     def put(self, request, format=None):
@@ -27,14 +29,12 @@ class UpdateUserProfileView(APIView):
             first_name = data['first_name']
             last_name = data['last_name']
             phone = data['phone']
-            city = data['city']
-
-            UserProfile.objects.filter(user=user).update(first_name=first_name, last_name=last_name, phone=phone, city=city)
+            UserProfile.objects.filter(user=user).update(first_name=first_name, last_name=last_name, phone=phone,)
 
             user_profile = UserProfile.objects.get(user=user)
             user_profile = UserProfileSerializer(user_profile)
 
             return Response({ 'profile': user_profile.data, 'username': str(username) })
-        except:
-            return Response({ 'error': 'Something went wrong when updating profile' })
+        except Exception as e:
+            return Response({ 'error': f'Something went wrong when updating profile{e}' })
 

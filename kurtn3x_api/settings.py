@@ -56,8 +56,6 @@ ALLOWED_HOSTS= [
         'test.kurtn3x.xyz',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 # REST STUFF
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -78,12 +76,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'authentication',
     'user_profile',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
