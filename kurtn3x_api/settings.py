@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from django.template import Template
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,11 @@ with open ("/django_private.txt") as f:
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# AXES CONFIGURATION
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 0.5
+AXES_ONLY_USER_FAILURES = True
 
 
 # CSRF & CORS STUFF
@@ -66,8 +72,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 # Application definition
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesStandaloneBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,6 +92,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
     'user_profile',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -91,6 +104,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'kurtn3x_api.urls'

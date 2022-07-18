@@ -68,15 +68,15 @@ class LoginView(APIView):
         password = data['password']
 
         try:
-            user = auth.authenticate(username=username, password=password)
+            user = auth.authenticate(request=request, username=username, password=password)
 
             if user is not None:
                 auth.login(request, user)
                 return Response({ 'success': 'User authenticated' })
             else:
                 return Response({ 'error': 'Error Authenticating' }, "202")
-        except:
-            return Response({ 'error': 'Something went wrong when logging in' }, "202")
+        except Exception as e:
+            return Response({ 'error': f'{e} Something went wrong when logging in' }, "202")
 
 class LogoutView(APIView):
     def post(self, request, format=None):
